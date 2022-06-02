@@ -1,6 +1,6 @@
 name:  DEV setup
 on:
-  push:  
+  push:  main
 jobs:
   build:
 
@@ -25,10 +25,4 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: /var/www/vitawerks/dev
-      # - name: Deploy to my EC2 instance
-      #   uses: easingthemes/ssh-deploy@v2.1.5
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-      #     REMOTE_HOST: ${{ secrets.HOST_DNS }}
-      #     REMOTE_USER: ${{ secrets.USERNAME }}
-      #     TARGET: ${{ secrets.TARGET_DIR }}
+    
