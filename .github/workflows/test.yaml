@@ -24,3 +24,4 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: /var/www/vitawerks/dev
     
+    
