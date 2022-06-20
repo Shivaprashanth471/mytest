@@ -1,6 +1,6 @@
 name:  DEV setup
 on:
-  push: main
+  workflow_dispatch
 jobs:
   build:
     runs-on: self-hosted
