@@ -1,6 +1,6 @@
 name:  DEV setup
 on:
-  push:  main
+  push: main
 jobs:
   build:
     runs-on: self-hosted
