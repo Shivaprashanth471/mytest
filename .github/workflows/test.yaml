@@ -3,9 +3,7 @@ on:
   push:  main
 jobs:
   build:
-
     runs-on: self-hosted
-
     steps:
       - uses: actions/checkout@v1
       - name: Install Node.js
