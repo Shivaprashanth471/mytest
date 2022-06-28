@@ -1,27 +1,54 @@
-name:  DEV setup
+name: Deploy Container image to aws ECR
 on:
-  workflow_dispatch
-jobs:
-  build:
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v1
-      - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: Install yarn dependencies
-        run: yarn install
-      - name: Run build task
-        run: yarn build:staging
-      - name: Deploy to Staging server
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          ARGS: "-rltgoDzvO"
-          SOURCE: "build/*"
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: /var/www/vitawerks/dev
-    
+  push:
+    branches: master
+jobs: 
+    aws_ecr_dockerfile_deploy:
+        runs-on: ubuntu-latest
+        name: AWS ecr deploy- A job that deploys a image container using a aws_ecr_dockerfile_deploy
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v2
+          - name: Deploy container image to AWS ECR
+            uses: nyakaz73/aws-ecr-deploy@v0.08
+            id: deploy 
+            with:
+              access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+              secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+              region: ${{ secrets.AWS_REGION }}
+              aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+              image_name: myapp
+
+          - name: Get the output status
+            run: echo "${{ steps.deploy.outputs.status }}"
+
+
+
+
+
+# name:  DEV setup
+# on:
+#   workflow_dispatch
+# jobs:
+#   build:
+#     runs-on: self-hosted
+#     steps:
+#       - uses: actions/checkout@v1
+#       - name: Install Node.js
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: '14.x'
+#       - name: Install yarn dependencies
+#         run: yarn install
+#       - name: Run build task
+#         run: yarn build:staging
+#       - name: Deploy to Staging server
+#         uses: easingthemes/ssh-deploy@main
+#         env:
+#           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+#           ARGS: "-rltgoDzvO"
+#           SOURCE: "build/*"
+#           REMOTE_HOST: ${{ secrets.HOST_DNS }}
+#           REMOTE_USER: ${{ secrets.USERNAME }}
+#           TARGET: /var/www/vitawerks/dev
     

@@ -1,6 +1,7 @@
 name:  PROD setup
 on:
-  push:  
+  push:
+    branches: master
 jobs:
   build:  
     runs-on: ubuntu-latest
